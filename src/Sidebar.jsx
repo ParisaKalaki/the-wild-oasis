@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import Logo from "./Logo";
-import Mainnav from "./Mainnav";
+import MainNav from "./MainNav";
 import styled from "styled-components";
 
 const StyledSidebar = styled.aside`
@@ -19,7 +19,7 @@ function Sidebar() {
   return (
     <StyledSidebar>
       <Logo />
-      <Mainnav />
+      <MainNav />
     </StyledSidebar>
   );
 }
