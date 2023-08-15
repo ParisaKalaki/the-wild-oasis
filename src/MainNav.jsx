@@ -38,7 +38,7 @@ const StyledNavLink = styled(NavLink)`
     border-radius: var(--border-radius-sm);
   }
 
-  /* icons
+  /* icons */
   & svg {
     width: 2.4rem;
     height: 2.4rem;
