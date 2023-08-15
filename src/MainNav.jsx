@@ -54,7 +54,7 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-function Mainnav() {
+function MainNav() {
   return (
     <nav>
       <NavList>
@@ -94,4 +94,4 @@ function Mainnav() {
   );
 }
 
-export default Mainnav;
+export default MainNav;
