@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import Heading from "../Heading";
+import Heading from "../ui/Heading";
 
 const StyledPageNotFound = styled.main`
   height: 100vh;
