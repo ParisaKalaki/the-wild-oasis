@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import { useDeleteCabin } from "./useDeleteCabin";
+import { useState } from "react";
+import CreateCabinForm from "./CreateCabinForm";
 
 const TableRow = styled.div`
   display: grid;
@@ -43,6 +45,7 @@ const Discount = styled.div`
 
 function CabinRow({ cabin }) {
   const { isDeleting, deleteCabin } = useDeleteCabin();
+  const [showForm, setShowForm] = useState(false);
 
   const {
     id: cabinId,
@@ -52,6 +55,7 @@ function CabinRow({ cabin }) {
     regularPrice,
     discount,
   } = cabin;
+
   return (
     <>
       <TableRow role="row">
@@ -64,7 +68,16 @@ function CabinRow({ cabin }) {
         <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
           Delete
         </button>
+        <button
+          onClick={() => {
+            setShowForm((show) => !show);
+          }}
+          disabled={showForm}
+        >
+          Edit
+        </button>
       </TableRow>
+      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
     </>
   );
 }
