@@ -1,11 +1,23 @@
+/* eslint-disable no-unused-vars */
 import supabase from "./supabase";
 
-export async function getBookings() {
-  let { data, error } = await supabase
+//filter and sort on the server side rather than clients side
+export async function getBookings({ filter, sortBy }) {
+  let query = supabase
     .from("bookings")
     .select(
       "id, created_at, startDate, endDate, numGuests, status, totalPrice, cabins(name), guests(fullName, email)"
     );
+  //filter
+  if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
+
+  //sort
+  if (sortBy)
+    query = query.order(sortBy.field, {
+      ascending: sortBy.direction === "asc",
+    });
+
+  const { data, error } = await query;
 
   if (error) {
     console.log("Bookings could not be loaded");
