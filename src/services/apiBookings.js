@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 import supabase from "./supabase";
+import { PAGE_SIZE } from "../utils/constants";
 
 //filter and sort on the server side rather than clients side
-export async function getBookings({ filter, sortBy }) {
+export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
     .from("bookings")
     .select(
-      "id, created_at, startDate, endDate, numGuests, status, totalPrice, cabins(name), guests(fullName, email)"
+      "id, created_at, startDate, endDate, numGuests, status, totalPrice, cabins(name), guests(fullName, email)",
+      { count: "exact" }
     );
   //filter
   if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
@@ -17,13 +19,19 @@ export async function getBookings({ filter, sortBy }) {
       ascending: sortBy.direction === "asc",
     });
 
-  const { data, error } = await query;
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.log("Bookings could not be loaded");
     throw new Error();
   }
-  return data;
+  return { data, count };
 }
 export async function deleteBooking(id) {
   // REMEMBER RLS POLICIES
