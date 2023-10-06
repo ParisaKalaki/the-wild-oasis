@@ -9,7 +9,7 @@ import {
 import { styled } from "styled-components";
 import { format, isToday } from "date-fns";
 import DataItem from "../../ui/DataItem";
-//import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
+import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
 
 const StyledBookingDataBox = styled.section`
   /* Box */
@@ -127,7 +127,10 @@ function BookingDataBox({ booking }) {
         </div>
         <p>
           {format(new Date(startDate), "EEE, MMM dd yyyy")}(
-          {isToday(new Date(startDate)) ? "Today" : startDate}) &mdash;
+          {isToday(new Date(startDate))
+            ? "Today"
+            : formatDistanceFromNow(startDate)}
+          ) &mdash;
           {format(new Date(endDate), "EEE, MMM dd yyyy")}
         </p>
       </Header>
@@ -157,8 +160,11 @@ function BookingDataBox({ booking }) {
 
         <Price isPaid={isPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
-            {totalPrice}
-            {hasBreakfast && `(${cabinPrice} cabin + ${extrasPrice} breakfast)`}
+            {formatCurrency(totalPrice)}
+            {hasBreakfast &&
+              `(${formatCurrency(cabinPrice)}  cabin + ${formatCurrency(
+                extrasPrice
+              )} breakfast)`}
           </DataItem>
           <p>{isPaid ? "Paid" : "will pay at property"}</p>
         </Price>
