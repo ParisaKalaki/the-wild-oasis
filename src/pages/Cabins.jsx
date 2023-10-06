@@ -20,3 +20,4 @@ function Cabins() {
 }
 
 export default Cabins;
+//a page should not fetch data and not have any other side effect
