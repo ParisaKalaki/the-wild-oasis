@@ -18,7 +18,6 @@ import Table from "../../ui/Table";
 
 import { useDeleteBooking } from "./useDeleteBooking";
 import { formatDistanceFromNow } from "../../utils/helpers";
-//import { useCheckout } from "features/check-in-out/useCheckout";
 import { format, isToday } from "date-fns";
 import { useCheckout } from "../check-in-out/useCheckout";
 
@@ -64,7 +63,7 @@ function BookingRow({
   },
 }) {
   const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
-  const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
+  const { checkout, isCheckingOut } = useCheckout();
   const navigate = useNavigate();
   const statusToTagName = {
     unconfirmed: "blue",
@@ -95,6 +94,7 @@ function BookingRow({
       </Stacked>
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
       <Amount>{totalPrice}</Amount>
+
       <Menus.Menu>
         <Menus.Toggle id={bookingId} />
 
@@ -111,6 +111,16 @@ function BookingRow({
               onClick={() => navigate(`/checkin/${bookingId}`)}
             >
               Check in
+            </Menus.Button>
+          )}
+
+          {status === "checked-in" && (
+            <Menus.Button
+              icon={<HiArrowUpOnSquare />}
+              onClick={() => checkout(bookingId)}
+              disabled={isCheckingOut}
+            >
+              Check out
             </Menus.Button>
           )}
         </Menus.List>
