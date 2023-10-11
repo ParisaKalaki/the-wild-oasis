@@ -12,6 +12,7 @@ import { useBooking } from "./useBooking";
 import Spinner from "../../ui/Spinner";
 import Empty from "../../ui/Empty";
 import BookingDataBox from "./BookingDataBox";
+import { HiArrowDownOnSquare } from "react-icons/hi2";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
   const moveBack = useMoveBack();
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   if (isLoading) return <Spinner />;
   if (!booking) return <Empty resourceName="booking" />;
 
@@ -43,6 +44,11 @@ function BookingDetail() {
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
       <ButtonGroup>
+        {status === "unconfirmed" && (
+          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
+            Check in
+          </Button>
+        )}
         <Button variation="secondaty" onClick={moveBack}>
           Back
         </Button>

@@ -125,7 +125,6 @@ function Button({ children, icon, onClick }) {
         {icon}
         <span>{children}</span>
       </StyledButton>
-      ;
     </li>
   );
 }
