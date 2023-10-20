@@ -1,4 +1,4 @@
-# the-world-oasis
+# the-wild-oasis
 
 Hotel Web Application
 
